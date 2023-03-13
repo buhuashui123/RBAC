@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en"xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+    a{
+        text-decoration:none;
+    }
+</style>
+<body>
+您的群账号：<span th:text="${group.account}"></span><br/>
+<a th:href="@{/user/home}">返回首页</a>
+</body>
+</html>

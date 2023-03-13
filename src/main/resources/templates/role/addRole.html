@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en"xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+添加角色
+<form method="post" action="/role/addRole">
+    角色名：<input type="text" name="roleName"/>
+    <span style="color: red" th:text="${msg}"></span><br/>
+    <input type="submit"/>
+</form>
+</body>
+</html>

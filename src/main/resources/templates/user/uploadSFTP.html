@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en"xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.js"></script>
+</head>
+<body>
+更换头像
+当前用户：<span th:text="${userName}"></span><br/>
+<form id="f1" method="post"  enctype="multipart/form-data" action="/user/upLoadPreview">
+    <input id="userID" name="userID" type="hidden" th:value="${userID}"/>
+    <input id="file" name="fileName" type="file" onchange="checkAvatar()"/>
+    <span id="s1">
+        <img id="imgs" th:src="${path}" width="100" height="100"/>
+    </span>
+</form>
+
+
+</body>
+
+<script type="text/javascript">
+    function checkAvatar() {
+        var formdata = new FormData($("#f1")[0]);
+        var userID = $("#userID").val();
+        var url = "http://127.0.0.1:8080/json/checkAvatar.ht";
+        $.ajax({
+            url:url,//写你请求的地址
+            data:formdata, //写你的请求参数，如果没有参数不用写，空字符串就可以
+            type:"post",       //请求方式get/post
+            cache:false,
+            contentType:false,
+            processData:false,
+            success:function (obj) {
+                console.log(obj)
+                $("#s1").html(
+                    "<img src='"+obj+"' width='100' height='100'/>"+
+                    "<input type='hidden' name='path' value='"+obj+"'/>"+
+                    "<a href='/user/noUpload?path="+obj+"'>取消上传</a>"+
+                    "<input type='submit' value='确定上传'/>"
+                );
+            }
+        });
+    }
+</script>
+</html>

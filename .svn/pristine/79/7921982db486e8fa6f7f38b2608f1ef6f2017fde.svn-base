@@ -1,0 +1,38 @@
+package com.springboot.poi;
+
+import com.springboot.poi.filter.TeacherFilterChain;
+import com.springboot.poi.helper.ClassGeneration;
+import com.springboot.poi.utils.ExcelsUtil;
+import com.springboot.pojo.Teacher;
+
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+public class Demo {
+
+    public static void main(String[] args) {
+
+        String[] s = {"序号","姓名","年龄","性别","手机"};
+        InputStream in = ExcelsUtil.getInputStream("D:/学生表.xlsx");
+        Map<String, List<Object[]>> map = ExcelsUtil.getMap(in);
+        ClassGeneration<Teacher> classGeneration = new ClassGeneration<>();
+        Map<String, List<Teacher>> readToBeanMap = classGeneration.readToBeanMap(map, s, Teacher.class);
+
+        List<Teacher> teList = new ArrayList<>();
+        List<Teacher> reList = new ArrayList<>();
+        TeacherFilterChain vol = new TeacherFilterChain();
+
+        for (Map.Entry<String, List<Teacher>> stringListEntry : readToBeanMap.entrySet()) {
+            List<Teacher> teacherList = stringListEntry.getValue();
+            reList.addAll(vol.doFilter(teacherList));
+            teList.addAll(teacherList);
+        }
+
+
+        for (Teacher teacher : reList) {
+            System.out.println(teacher.toString());
+        }
+    }
+}

@@ -1,0 +1,146 @@
+package com.springboot.utils;
+
+import com.jcraft.jsch.*;
+import org.apache.commons.lang.ArrayUtils;
+
+import java.io.InputStream;
+import java.util.Properties;
+
+public class SftpUtils {
+
+    /* 连接通道 */
+    private ChannelSftp sftp;
+    /* 连接session */
+    private Session session;
+    /* 用户名 */
+    private String username;
+    /* 密码 */
+    private String password;
+    /* 私钥 */
+    private String privateKey;
+    /* ip地址 */
+    private String host;
+    /* 端口 */
+    private int port;
+
+    //无参构造
+    public SftpUtils() {
+    }
+
+    /**
+     * 构造基于密码认证的sftp对象
+     * @param username
+     * @param password
+     * @param host
+     * @param port
+     */
+    public SftpUtils(String username, String password, String host, int port) {
+        this.username = username;
+        this.password = password;
+        this.host = host;
+        this.port = port;
+    }
+
+    /**
+     * 构造基于秘钥认证的sftp对象
+     * @param username
+     * @param host
+     * @param port
+     * @param privateKey
+     */
+    public SftpUtils(String username,String host,int port,String privateKey){
+        this.username = username;
+        this.host = host;
+        this.port = port;
+        this.privateKey = privateKey;
+    }
+
+    /**
+     * 连接SFTP文件服务器
+     */
+    public void login() {
+            try {
+                JSch jsch = new JSch();
+                if (privateKey != null){
+                    jsch.addIdentity(privateKey);//设置私密
+                }
+                session = jsch.getSession(username,host,port);
+                if (password != null) {
+                    session.setPassword(password);
+                }
+                Properties config = new Properties();
+                config.put("StrictHostKeyChecking", "no");
+                //为session对象设置properties
+                session.setConfig(config);
+                //关闭认证
+                session.connect();
+                //创建sftp通信通道
+                Channel channel = session.openChannel("sftp");
+                channel.connect();
+                sftp = (ChannelSftp) channel;
+            } catch (JSchException e) {
+                e.printStackTrace();
+            }
+    }
+
+    /**
+     * 关闭连接 server
+     */
+    public void closeServer(){
+        if (sftp!=null) {
+            if (sftp.isConnected()) {
+                sftp.disconnect();
+            }
+        }
+        if (session!=null) {
+            if (session.isConnected()) {
+                session.disconnect();
+            }
+        }
+    }
+
+    /*** 将输入流的数据上传到sftp作为文件。
+     * 文件完整路径=basePath+directory
+     * @param basePath 服务器的基础路径
+     * @param directory 上传到该目录
+     * @param sftpFileName sftp端文件名
+     * @param input 输入流 */
+    public  void upload(String basePath, String directory, String sftpFileName, InputStream input){
+        try {
+            sftp.cd(basePath);
+            sftp.cd(directory);
+        } catch (SftpException e) {
+            //目录不存在，则创建文件夹
+            String[] dirs = directory.split("/");
+            String tempPath = basePath;
+            if (!ArrayUtils.isEmpty(dirs)) {
+                for (String dir : dirs) {
+                    //使用绝对路径，相对路径会出现一些bug
+                    tempPath = tempPath + "/"+dir;
+                    //tempPath += "/" + dir;
+                    try {
+                        sftp.cd(tempPath);
+                    } catch (SftpException sftpException) {
+                        try {
+                            sftp.mkdir(tempPath);
+                            sftp.cd(tempPath);
+                        } catch (SftpException exception) {
+                            exception.printStackTrace();
+                        }
+                    }
+                }
+            }
+        }
+        try {
+            sftp.put(input,sftpFileName);
+        } catch (SftpException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
+
+
+
+}

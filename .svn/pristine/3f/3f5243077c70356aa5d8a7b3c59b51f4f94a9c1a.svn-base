@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en"xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+    a{
+        text-decoration:none;
+    }
+</style>
+<body>
+<table border="1">
+    <tr>
+        <td colspan="2">当前用户：<span th:text="${user.userName}"></span></td>
+        <td colspan="1"><img th:src="${path}" width="50" height="50"></td>
+    </tr>
+    <tr>
+        <td><a th:href="@{/user/show}">查看所有用户信息</a></td>
+        <td><a th:href="@{/user/showFriend}">查看好友</a></td>
+        <td><a th:href="@{/user/showRequest}">查看申请页面</a></td>
+    </tr>
+    <tr>
+        <td><a th:href="@{/group/add}">创建群</a></td>
+        <td><a th:href="@{/group/show}">查看群</a></td>
+        <td><a th:href="@{/group/showRequest}">查看群申请</a></td>
+    </tr>
+    <tr>
+        <td><a th:href="@{/user/search}">搜索账号</a></td>
+        <td><a th:href="@{/group/search}">搜索群号</a></td>
+        <td><a th:href="@{/user/upload}">切换头像</a></td>
+    </tr>
+    <tr>
+        <td colspan="3"><a th:href="@{/user/exit}">退出</a></td>
+    </tr>
+
+</table>
+</body>
+</html>

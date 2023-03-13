@@ -1,0 +1,19 @@
+package com.springboot.poi.check;
+
+import com.springboot.poi.filter.AbstractValidator;
+import com.springboot.pojo.Teacher;
+
+/**
+ * 手机号过滤
+ */
+public class CheckPhone extends AbstractValidator<Teacher,Teacher> {
+
+    @Override
+    public Teacher validate(Teacher t) {
+        if (t.getPhone().length()>5) {
+            //手机号长度超过5
+            return t;
+        }
+        return null;
+    }
+}

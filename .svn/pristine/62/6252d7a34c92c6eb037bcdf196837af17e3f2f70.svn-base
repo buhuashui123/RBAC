@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace 写你央射接口包名，类型 -->
+<mapper namespace="com.springboot.in.URDao">
+    <!--给用户添加多个角色-->
+    <insert id="addUR" parameterType="com.springboot.pojo.UserAndRole">
+        insert into userandrole values
+        <foreach collection="list" item="ur" separator=",">
+            (#{ur.userID},#{ur.roleID})
+        </foreach>
+    </insert>
+
+    <!--删除用户的所有角色-->
+    <delete id="DelUR" parameterType="com.springboot.pojo.UserAndRole">
+        delete from userandrole where userID in
+        <foreach collection="list" item="ur" open="(" separator="," close=")">
+            #{ur.userID}
+        </foreach>
+    </delete>
+
+</mapper>

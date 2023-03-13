@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace 写你央射接口包名，类型 -->
+<mapper namespace="com.springboot.in.TeacherDao">
+
+    <!--添加多个用户信息-->
+    <insert id="addTeacher" parameterType="com.springboot.pojo.Teacher">
+        insert into teacher values
+        <foreach collection="list" item="t" separator=",">
+            (#{t.id},#{t.name},#{t.age},#{t.sex},#{t.phone})
+        </foreach>
+    </insert>
+
+    <!--查询用户信息-->
+    <select id="selectAll" resultType="com.springboot.pojo.Teacher">
+        select  * from teacher
+    </select>
+</mapper>

@@ -1,0 +1,20 @@
+package com.springboot.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+@RequestMapping("text")
+public class HelloController {
+
+    @RequestMapping("hello")
+    public String hello(){
+        return "/text/hello";
+    }
+
+    //权限不足返回错误页面
+    @RequestMapping("error")
+    public String error(){
+        return "/text/error";
+    }
+}

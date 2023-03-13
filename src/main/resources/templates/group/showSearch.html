@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en"xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<table border="1">
+    <tr>
+        <td>群名</td>
+        <td>群号</td>
+        <td>操作</td>
+    </tr>
+
+    <tr th:each="group:${groupList}">
+        <td th:text="${group.name}"></td>
+        <td th:text="${group.account}"></td>
+        <td><a th:href="@{/group/addGR(id=${group.id})}">申请加入</a></td>
+    </tr>
+
+    <tr>
+        <td colspan="3"><a th:href="@{/user/home}">返回首页</a></td>
+    </tr>
+</table>
+</body>
+</html>

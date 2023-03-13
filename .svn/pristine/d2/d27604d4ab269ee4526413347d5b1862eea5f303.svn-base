@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en"xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+当前用户：<span th:text="${userName}"></span><br/>
+<form method="post"  enctype="multipart/form-data" action="/user/upLoadAvatar">
+    <input name="userID" type="hidden" th:value="${userID}"/>
+    <input name="fileName" type="file"/>
+    <input type="submit"/>
+</form>
+</body>
+</html>

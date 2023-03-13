@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace 写你央射接口包名，类型 -->
+<mapper namespace="com.springboot.in.UFDao">
+
+    <!--根据用户查讯用户好友-->
+    <select id="selectAll" parameterType="String" resultType="com.springboot.pojo.User">
+        SELECT
+          u.*
+        FROM
+          user u
+        JOIN
+         (SELECT userID from user_friend where friendsID = #{userID}
+          union all
+          SELECT friendsID from user_friend where userID = #{userID}) f
+        ON
+        u.userID = f.userID;
+    </select>
+
+    <!--添加好友-->
+    <insert id="addUF" parameterType="com.springboot.pojo.UFPojo">
+        insert into user_Friend values
+        <foreach collection="list" item="f" separator=",">
+            (#{f.userID},#{f.friendsID})
+        </foreach>
+    </insert>
+
+    <!--删除好友-->
+    <select id="DelUF" parameterType="com.springboot.pojo.UFPojo" >
+        <foreach collection="list" item="f">
+            call del_friend(#{f.userID},#{f.friendsID})
+        </foreach>
+    </select>
+</mapper>

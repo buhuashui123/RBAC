@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en"xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form action="/role/addUserRole">
+    用户名：<span th:text="${userName}"></span><br/>
+    <input name="userID" th:value="${userID}" type="hidden"/>
+    请选择角色：
+    <select name="roleID">
+        <option th:each="role:${roleList}" th:value="${role.roleID}" th:text="${role.roleName}"></option>
+    </select>
+    <br/>
+    <input type="submit">
+</form>
+</body>
+</html>

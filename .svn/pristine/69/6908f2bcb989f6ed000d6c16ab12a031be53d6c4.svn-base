@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en"xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <form action="/menu/addMenu">
+        权限名：<input name="name"><span style="color: red" th:text="${msg}"></span><br/>
+        是否选择归属：
+        <input type="radio" name="sex" checked="checked" th:value="是" />是
+        <input type="radio" name="sex" th:value="否" />否</td><br/>
+        请选择归属：
+        <select name="pid">
+            <option th:each="menu:${menuList}" th:value="${menu.menuID}" th:text="${menu.menuName}"></option>
+        </select><br/>
+        menuCode:<input name="menuCode"><br/>
+        <input type="submit">
+    </form>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace 写你央射接口包名，类型 -->
+<mapper namespace="com.springboot.in.UserRDao">
+
+    <!--根据当前用户ID查询出他的申请页面-->
+    <select id="selectAll" parameterType="String" resultType="com.springboot.pojo.User">
+        select
+        *
+        from
+        user where userID in
+        (select requestID from user_Request where userID = #{userID})
+    </select>
+
+    <!--删除某个用户的某个申请-->
+    <delete id="DelUserR" parameterType="com.springboot.pojo.UserRPojo">
+        delete from user_Request where userID = #{userID} and requestID = #{requestID}
+    </delete>
+
+    <!--添加多个用户的多个申请-->
+    <insert id="addUserR" parameterType="com.springboot.pojo.UserRPojo">
+        insert into user_Request values
+        <foreach collection="list" separator="," item="r">
+            (#{r.userID},#{r.requestID})
+        </foreach>
+    </insert>
+</mapper>

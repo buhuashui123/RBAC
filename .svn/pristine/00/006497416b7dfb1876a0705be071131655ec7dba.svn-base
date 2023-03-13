@@ -1,0 +1,51 @@
+package com.springboot.text;
+
+import com.jcraft.jsch.SftpException;
+import com.springboot.utils.FtpUtils;
+import com.springboot.utils.SftpUtils;
+
+import java.io.*;
+import java.util.Vector;
+
+public class Demo {
+
+    public static void main(String[] args) throws SftpException {
+        String path = "D:/休闲娱乐/头像/二哈.jpg";
+        InputStream in = null;
+        try {
+            in =    new FileInputStream(path);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        String s = FtpUtils.uploadFile("/userID/","123.jpg",in);
+        System.out.println(s);
+
+        FtpUtils.delete("/userID/","123.jpg");
+
+
+//        String str = "^[1][3-6][0-9][0-9]{8}";
+//        String phone = "15832013175";
+//        System.out.println(phone.matches(str));
+//        SftpUtils utils = new SftpUtils("root",
+//                "520520",
+//                "192.168.44.131",
+//                22);
+//        utils.login();
+//        //上传文件测试
+//        File file = new File(path);
+//        InputStream in = null;
+//        try {
+//             in = new FileInputStream(file);
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        }
+//        utils.upload("/home/mysftp/", "UserID", "456.jpg", in);
+//
+//        utils.download("/home/mysftp/UserID","456.jpg","d:/123.jpg");
+//        Vector<?> objects = utils.listFiles("/home/mysftp/UserID");
+//        //utils.delete("/home/mysftp/UserID","456.jpg");
+//        utils.closeServer();
+
+    }
+}

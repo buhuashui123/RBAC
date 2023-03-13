@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace 写你央射接口包名，类型 -->
+<mapper namespace="com.springboot.in.RoleDao">
+
+    <!--添加多个角色信息-->
+    <insert id="addRole" parameterType="com.springboot.pojo.Role">
+        insert into role values
+        <foreach collection="list" item="r" separator=",">
+            (0,#{r.roleName})
+        </foreach>
+    </insert>
+
+    <!--删除多个角色信息-->
+    <delete id="DelRole" parameterType="com.springboot.pojo.Role">
+        delete from role where roleID in
+        <foreach collection="list" item="r" open="(" close=")" separator=",">
+            #{r.roleID}
+        </foreach>
+    </delete>
+
+    <!--修改角色信息-->
+    <update id="UpRole" parameterType="com.springboot.pojo.Role">
+        update role
+        <set>
+            <if test="roleName != null">
+                roleName = #{roleName},
+            </if>
+        </set>
+        where roleID = #{roleID}
+    </update>
+
+    <!--查询所有角色信息-->
+    <select id="selectAll" resultType="com.springboot.pojo.Role">
+        select * from role
+    </select>
+
+
+</mapper>

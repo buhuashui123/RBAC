@@ -1,0 +1,13 @@
+com\springboot\service\URService.class
+com\springboot\in\RMDao.class
+com\springboot\annotations\MenuAnnotation.class
+com\springboot\service\RMService.class
+com\springboot\config\RedisConfig.class
+com\springboot\pojo\UserAndRole.class
+com\springboot\config\ThymeleafDialectConfig.class
+com\springboot\service\impl\URServiceImpl.class
+com\springboot\custom\MenuIterator.class
+com\springboot\pojo\RoleAndMenu.class
+com\springboot\service\impl\RMServiceImpl.class
+com\springboot\register\SysDialect.class
+com\springboot\interceptors\MenuInterceptor.class

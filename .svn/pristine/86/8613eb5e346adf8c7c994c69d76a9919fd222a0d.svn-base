@@ -1,0 +1,52 @@
+package com.springboot.service.impl;
+
+import com.springboot.in.DetailDao;
+import com.springboot.pojo.Details;
+import com.springboot.service.DetailService;
+
+import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.List;
+
+public class DetailServiceImpl implements DetailService {
+
+    @Resource
+    private DetailDao detailDao;
+
+
+    @Override
+    public int addDetail(Details details) {
+        Details details1 = detailDao.selectAll(details.getUserID());
+        //判断账号是否已存在别的状态，如果已存在把其删掉
+        if (details1!=null) {
+            System.out.println("该用户的状态已存在");
+            DelDetails(details1);
+        }
+        //创建一个新集合
+        List<Details> list = new ArrayList<>();
+        //把用户状态存入接中
+        list.add(details);
+        //调用持久层的添加方法
+        return detailDao.addDetail(list);
+    }
+
+    @Override
+    public int DelDetails(Details details) {
+        //创建一个新集合
+        List<Details> list = new ArrayList<>();
+        //把数据存入集合
+        list.add(details);
+        //调用持久层的删除方法
+        return detailDao.DelDetails(list);
+    }
+
+    @Override
+    public int UPDetail(Details details) {
+        return detailDao.UPDetail(details);
+    }
+
+    @Override
+    public Details selectAll(String userID) {
+        return detailDao.selectAll(userID);
+    }
+}

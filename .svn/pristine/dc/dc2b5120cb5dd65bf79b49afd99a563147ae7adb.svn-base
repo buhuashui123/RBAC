@@ -1,0 +1,18 @@
+package com.springboot.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+@Controller
+@RequestMapping("json")
+public class JsonController {
+
+
+    @RequestMapping("checkName.ht")
+    @ResponseBody
+    public String checkName(){
+
+        return null;
+    }
+}

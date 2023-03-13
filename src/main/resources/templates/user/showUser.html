@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:bs="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+    a{
+        text-decoration:none;
+    }
+</style>
+<body>
+
+<table border="1">
+
+    <tr>
+        <th>用户ID</th>
+        <th>用户姓名</th>
+        <th>用户账号</th>
+        <th>用户密码</th>
+        <th colspan="3">操作</th>
+    </tr>
+
+    <tr th:each="user:${userList}">
+        <td th:text="${user.userID}"></td>
+        <td th:text="${user.userName}"></td>
+        <td th:text="${user.loginName}"></td>
+        <td th:text="${user.loginPass}"></td>
+        <td><a th:href="@{/role/addUR(userID=${user.userID},userName=${user.userName})}">添加角色</a></td>
+        <td><a th:href="@{/user/DelUser(userID=${user.userID})}">删除用户</a></td>
+        <td><a th:href="@{/user/UpUser(userID=${user.userID})}">修改用户</a></td>
+    </tr>
+    <tr>
+        <td colspan="4"><a th:href="@{/user/add}">添加用户</a></td>
+        <td colspan="3"><a th:href="@{/user/home}">返回首页</a></td>
+    </tr>
+
+</table>
+</body>
+</html>

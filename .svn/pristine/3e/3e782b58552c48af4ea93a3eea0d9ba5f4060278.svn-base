@@ -1,0 +1,17 @@
+package com.springboot.service;
+
+import com.springboot.annotations.TargetDataSource;
+import com.springboot.pojo.Teacher;
+
+import java.util.List;
+
+public interface TeacherService {
+
+
+
+    /**
+     * 查询用户信息
+     * @return 返回值为用户信息集合
+     */
+    List<Teacher> selectAll();
+}

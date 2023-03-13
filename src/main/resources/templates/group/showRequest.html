@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en"xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<table border="1">
+    <tr>
+        <td>群名</td>
+        <td>申请人</td>
+        <td colspan="2">操作</td>
+    </tr>
+
+    <tr th:each="grName:${grNameList}">
+        <td th:text="${grName.name}"></td>
+        <td th:text="${grName.userName}"></td>
+        <td><a th:href="@{/group/consent(userID=${grName.userID},id=${grName.id})}">同意</a></td>
+        <td><a th:href="@{/group/decline(userID=${grName.userID},id=${grName.id})}">拒绝</a></td>
+    </tr>
+
+    <tr>
+        <td colspan="4"><a th:href="@{/user/home}">返回首页</a></td>
+    </tr>
+</table>
+</body>
+</html>

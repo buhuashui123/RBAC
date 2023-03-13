@@ -1,0 +1,22 @@
+package com.springboot.service.impl;
+
+import com.springboot.in.TeacherDao;
+import com.springboot.pojo.Teacher;
+import com.springboot.service.TeacherService;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import java.util.List;
+
+@Service
+public class TeacherServiceImpl implements TeacherService {
+
+    @Resource
+    private TeacherDao teacherDao;
+
+
+    @Override
+    public List<Teacher> selectAll() {
+        return teacherDao.selectAll();
+    }
+}

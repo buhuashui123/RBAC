@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en"xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<table border="1">
+    <tr>
+        <th>角色ID</th>
+        <th>角色名</th>
+        <th colspan="3">操作</th>
+    </tr>
+
+    <tr th:each="role:${roleList}">
+        <td th:text="${role.roleID}"></td>
+        <td th:text="${role.roleName}"></td>
+        <td><a th:href="@{/menu/addRM(roleID=${role.roleID},roleName=${role.roleName})}">添加权限</a></td>
+        <td><a th:href="@{/role/DelRole(roleID=${role.roleID})}">删除角色</a></td>
+        <td><a th:href="@{/role/UpRole(roleID=${role.roleID})}">修改角色</a></td>
+    </tr>
+</table>
+</body>
+</html>

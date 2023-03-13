@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+    a{
+        text-decoration:none;
+    }
+</style>
+<body>
+<span>您的好友：</span><br/>
+<table border="1">
+    <tr>
+        <th>好友姓名</th>
+        <th>好友账号</th>
+        <th colspan="1">操作</th>
+
+    <tr th:each="user:${userList}">
+        <td th:text="${user.userName}"></td>
+        <td th:text="${user.loginName}"></td>
+        <td><a th:href="@{/user/DelFriend(friendsID=${user.userID})}">删除好友</a></td>
+    </tr>
+    <tr>
+        <td colspan="3"><a th:href="@{/user/home}">返回首页</a></td>
+    </tr>
+
+</table>
+</body>
+</html>

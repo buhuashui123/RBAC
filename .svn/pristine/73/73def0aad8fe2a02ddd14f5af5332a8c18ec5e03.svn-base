@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace 写你央射接口包名，类型 -->
+<mapper namespace="com.springboot.in.GRDao">
+
+    <!--添加申请-->
+    <insert id="addGR" parameterType="com.springboot.pojo.GRPojo">
+        insert into group_request values
+        <foreach collection="list" item="gr" separator=",">
+            (#{gr.id},#{gr.userID})
+        </foreach>
+    </insert>
+
+    <!--删除申请-->
+    <delete id="DelGR" parameterType="com.springboot.pojo.GRPojo">
+        delete from group_request where id = #{id} and userID = #{userID}
+    </delete>
+
+    <!--查出群ID查出当前群的申请-->
+    <select id="selectAllByID" parameterType="String" resultType="com.springboot.pojo.GRPojo">
+        select  * from group_request where id = #{gr.id}
+    </select>
+
+    <!--根据用户ID查出所有群的申请-->
+    <select id="selectAllByUserID" parameterType="String" resultType="com.springboot.pojo.GRName">
+        select
+        g.name,g.id,u.userName,u.userID
+        from
+        group_request gr
+        join
+        groups g
+        on
+        gr.id = g.id
+        join
+        user u
+        on
+        u.userID = gr.userID
+        join
+        group_user gu
+        on
+        gu.id = g.id
+        where
+        gu.userID = #{userID}
+    </select>
+</mapper>

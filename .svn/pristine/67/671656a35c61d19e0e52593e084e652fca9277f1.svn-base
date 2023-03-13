@@ -1,0 +1,54 @@
+package com.springboot.controller;
+
+import com.springboot.pojo.Teacher;
+import com.springboot.pojo.User;
+import com.springboot.service.TeacherService;
+import com.springboot.service.UserService;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.annotation.Resource;
+import java.util.List;
+
+@Controller
+@RequestMapping("text")
+public class HelloController {
+
+    @Resource
+    private UserService userService;
+
+    @Resource
+    private TeacherService teacherService;
+
+    @RequestMapping("hello")
+    public String hello(){
+        return "/text/hello";
+    }
+
+    //权限不足返回错误页面
+    @RequestMapping("error")
+    public String error(){
+        return "/text/error";
+    }
+
+
+    /**
+     * 切换数据源测试
+     * @return
+     */
+    @RequestMapping("show")
+    @ResponseBody
+    public String show(){
+        List<User> userList = userService.selectAll();
+        List<User> userLists = userService.selectAllByPL();
+        List<Teacher> teacherList = teacherService.selectAll();
+
+        System.out.println(userList.toString());
+        System.out.println(userLists.toString());
+        System.out.println(teacherList.toString());
+        return "OK";
+    }
+
+
+}

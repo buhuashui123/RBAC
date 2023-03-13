@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en"xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+修改页面
+<form method="post" action="/role/UpdateRole">
+    <input name="roleID" th:value="${roleID}" type="hidden"/>
+    新角色名：<input name="roleName"/><br/>
+    <input type="submit"/>
+</form>
+</body>
+</html>

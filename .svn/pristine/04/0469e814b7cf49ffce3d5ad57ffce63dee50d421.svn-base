@@ -1,0 +1,38 @@
+package com.springboot.in;
+
+import com.springboot.pojo.Details;
+import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
+
+@Mapper
+public interface DetailDao {
+
+    /**
+     * 添加多个用户头像，状态
+     * @param list  用户详情对象的集合
+     * @return
+     */
+    int addDetail(List<Details> list);
+
+
+    /**
+     * 删除多个用户详情
+     * @param list 用户详情对象的集合
+     * @return
+     */
+    int DelDetails(List<Details> list);
+
+    /**
+     * 修改用户头像
+     * @param details 用户详情对象
+     * @return
+     */
+    int UPDetail(Details details);
+
+    /**
+     * 根据用户ID 查询用户的头像和账号状态
+     * @return
+     */
+    Details selectAll(String userID);
+}

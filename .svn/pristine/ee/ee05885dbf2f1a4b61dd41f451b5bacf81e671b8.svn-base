@@ -1,0 +1,40 @@
+package com.springboot.dataSource;
+
+import org.springframework.context.EnvironmentAware;
+import org.springframework.context.annotation.ImportBeanDefinitionRegistrar;
+import org.springframework.core.env.Environment;
+
+import javax.sql.DataSource;
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * 注册动态数据源
+ * 初始化数据源和提供了执行动态切换数据源的工具类
+ * EnvironmentAware （获取配置文件的（配置的属性值））
+ */
+public class DynamicDataSourceRegister implements ImportBeanDefinitionRegistrar, EnvironmentAware {
+
+    //指定默认数据源（springboot2.0默认数据源是ikarih如何使用其他数据源可以自己配置）
+    private static final String DATASOURCE_TYPE_DEFAULT = "com.zaxxer.hikari.HikariDataSource";
+    //默认数据源
+    private DataSource defaultDataSource;
+    //用户自定义数据源
+    private Map<String,DataSource> slaveDataSources = new HashMap<>();
+
+    /**
+     * 加载多数据源配置
+     * @param environment
+     */
+    @Override
+    public void setEnvironment(Environment environment) {
+        initDefaultDataSource(environment);
+        initSlaveDataSources(environment);
+    }
+
+    private void initSlaveDataSources(Environment environment) {
+    }
+
+    private void initDefaultDataSource(Environment environment) {
+    }
+}

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en"xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+创建群
+<form method="post" action="/group/addGroup">
+    <input type="hidden" name="userID" th:value="${userID}">
+    群名：<input type="text" id="name" name="name"/>
+    <span style="color: red" th:text="${msg}"></span>
+    <input type="submit"/>
+</form>
+</body>
+</html>

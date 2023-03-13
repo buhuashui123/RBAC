@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en"xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+    <style>
+        li{
+            list-style:none;
+        }
+    </style>
+<body>
+    请给角色添加权限：（角色名）<span th:text="${roleName}"></span>
+    <form method="post" action="/menu/addRoleMenu">
+        <input th:value="${roleID}" name="roleID" type="hidden"/>
+        <ul th:each="menu1:${menuList}">
+            <li class="cb"><!--一级-->
+                <span>
+                    <input type="checkbox" name="hobby" th:text="${menu1.menuName}" th:value="${menu1.menuID}"/>
+                </span>
+            </li>
+            <li th:each="menu2:${menu1.menuList}" >
+                <ul>
+                    <li class="cb"><!--二级-->
+                        <span><input type="checkbox" name="hobby" th:text="${menu2.menuName}" th:value="${menu2.menuID}"/></span>
+                    </li>
+                    <li th:each="menu3:${menu2.menuList}">
+                        <ul>
+                            <li class="cb"><!--三级-->
+                                <span ><input type="checkbox" name="hobby" th:text="${menu3.menuName}" th:value="${menu3.menuID}"/></span>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <input type="submit">
+    </form>
+</body>
+
+</html>

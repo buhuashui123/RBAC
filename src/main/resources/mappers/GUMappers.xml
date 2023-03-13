@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace 写你央射接口包名，类型 -->
+<mapper namespace="com.springboot.in.GUDao">
+
+    <!--给不同的群添加多个用户-->
+    <insert id="addGU" parameterType="com.springboot.pojo.GUPojo">
+        insert into group_user values
+        <foreach collection="list" item="gu" separator=",">
+            (#{gu.id},#{gu.userID})
+        </foreach>
+    </insert>
+
+    <!--删除不同的群的用户-->
+    <insert id="DelGU" parameterType="com.springboot.pojo.GUPojo">
+        delete from group_user where id = #{id} and userID = #{userID}
+    </insert>
+
+    <!--根据群id查出该群的用户信息-->
+    <select id="selectAllByID" parameterType="String" resultType="com.springboot.pojo.User">
+        select
+        u.*
+        from
+        user u
+        join
+        group_user gu
+        on
+        u.userID = gu.userID
+        where
+        gu.id = #{id}
+    </select>
+
+
+    <!--根据用户id查出该用户的群信息-->
+    <select id="selectAllByUserID" parameterType="String" resultType="com.springboot.pojo.Group">
+        select
+        g.*
+        from
+        groups g
+        join
+        group_user gu
+        on
+        gu.id = g.id
+        where
+        gu.userID = #{userID}
+    </select>
+</mapper>

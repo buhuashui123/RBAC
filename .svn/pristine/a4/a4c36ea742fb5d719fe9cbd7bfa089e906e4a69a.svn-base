@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace 写你央射接口包名，类型 -->
+<mapper namespace="com.springboot.in.DetailDao">
+
+    <!--添加多个用户信息-->
+    <insert id="addDetail" parameterType="com.springboot.pojo.Details">
+        insert into details values
+        <foreach collection="list" item="d" separator=",">
+            (#{d.userID},#{d.envelop},#{d.path})
+        </foreach>
+    </insert>
+
+    <!--删除多个用户信息-->
+    <delete id="DelDetails" parameterType="com.springboot.pojo.Details">
+        delete from details where userID
+        <foreach collection="list" item="d" open="(" close=")" separator=",">
+            #{d.userID}
+        </foreach>
+    </delete>
+
+    <!--查询用户信息-->
+    <select id="selectAll" parameterType="String" resultType="com.springboot.pojo.Details">
+        select * from details where userID = #{userID}
+    </select>
+
+    <!--修改用户信息-->
+    <update id="UPDetail" parameterType="com.springboot.pojo.Details">
+        update details
+        <set>
+            <if test="envelop != null">
+                envelop = #{envelop},
+            </if>
+            <if test="path != null">
+                path = #{path},
+            </if>
+        </set>
+        where userID = #{userID}
+    </update>
+
+</mapper>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace 写你央射接口包名，类型 -->
+<mapper namespace="com.springboot.in.RMDao">
+    <!--给角色添加多个权限-->
+    <insert id="addRM" parameterType="com.springboot.pojo.RoleAndMenu">
+        insert into roleandmenu values
+        <foreach collection="list" item="rm" separator=",">
+            (#{rm.roleID},#{rm.menuID})
+        </foreach>
+    </insert>
+
+    <!--删除角色的所有权限-->
+    <delete id="DelRM" parameterType="com.springboot.pojo.RoleAndMenu">
+        delete from roleandmenu where roleID in
+        <foreach collection="list" item="rm" open="(" separator="," close=")">
+            #{rm.roleID}
+        </foreach>
+    </delete>
+
+</mapper>

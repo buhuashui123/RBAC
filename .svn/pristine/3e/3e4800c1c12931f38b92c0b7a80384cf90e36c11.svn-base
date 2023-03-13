@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace 写你央射接口包名，类型 -->
+<mapper namespace="com.springboot.in.MenuDao">
+    <!--添加多个权限-->
+    <insert id="addMenu" parameterType="com.springboot.pojo.Menu">
+        insert into menu values
+        <foreach collection="list" item="m" separator=",">
+            (0,#{m.menuName},#{m.pID},#{m.menuCode})
+        </foreach>
+    </insert>
+
+    <!--删除多个权限-->
+    <delete id="DelMenu" parameterType="com.springboot.pojo.Menu">
+        delete from menu where menuID in
+        <foreach collection="list" item="m" open="(" separator="," close=")">
+            #{m.menuID}
+        </foreach>
+    </delete>
+
+    <!--使用递归查询全量有序的菜单-->
+    <select id="selectAllByPID" resultType="com.springboot.pojo.Menu">
+        select * from menu where pID = #{pID}
+    </select>
+
+    <!--查询用户的菜单-->
+    <select id="selectAllByUserID" parameterType="String" resultType="com.springboot.pojo.Menu">
+        select
+        m.*
+        from
+        menu m
+        join
+        roleandmenu rm
+        on
+        rm.menuID = m.menuID
+        join
+        userandrole ur
+        on
+        ur.roleID = rm.roleID
+        where
+        ur.userID = #{userID}
+    </select>
+
+    <!--查询所有权限-->
+    <select id="selectAll" resultType="com.springboot.pojo.Menu">
+        select * from menu
+    </select>
+</mapper>

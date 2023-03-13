@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en"xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+    li{
+        list-style:none;
+    }
+</style>
+<body>
+总条数:<span th:text="${sum}"></span><br/>
+成功条数:<span th:text="${trueNum}"></span><br/>
+失败条数:<span th:text="${falseNum}"></span><br/>
+错误信息:
+<ul th:each="resultRow:${errorList}">
+    <li>
+        错误行：
+        <span th:text="${resultRow.getIndex()}"></span>
+        <ul th:each="resultCell:${resultRow.getResultCells()}">
+            <li>
+                错误信息：
+                <span th:text="${resultCell.getError()}"></span>
+            </li>
+        </ul>
+    </li>
+</ul>
+</body>
+</html>

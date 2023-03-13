@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace 写你央射接口包名，类型 -->
+<mapper namespace="com.springboot.in.UserDao">
+
+    <!--添加多个用户信息-->
+    <insert id="addUser" parameterType="com.springboot.pojo.User">
+        insert into user values
+        <foreach collection="list" item="u" separator=",">
+            (pk_var("UID"),#{u.userName},#{u.loginName},#{u.loginPass},DATE_FORMAT(now(),'%Y%m%d%H%i%s'),DATE_FORMAT(now(),'%Y%m%d%H%i%s'))
+        </foreach>
+    </insert>
+
+    <!--删除多个用户信息-->
+    <delete id="DelUser" parameterType="com.springboot.pojo.User">
+        delete from user where userID in
+        <foreach collection="list" item="u" open="(" close=")" separator=",">
+            #{u.userID}
+        </foreach>
+    </delete>
+
+    <!--修改用户信息-->
+    <update id="UpUser" parameterType="com.springboot.pojo.User">
+        update user
+        <set>
+            <if test="userName != null">
+                userName = #{userName},
+            </if>
+            <if test="loginName != null">
+                loginName = #{loginName},
+            </if>
+            <if test="loginPass != null">
+                loginPass = #{loginPass},
+            </if>
+            turnoverTime = DATE_FORMAT(now(),'%Y%m%d%H%i%s')
+        </set>
+        where userID = #{userID}
+    </update>
+
+    <!--查询所有用户信息-->
+    <select id="selectAll" resultType="com.springboot.pojo.User">
+        select * from user
+    </select>
+
+    <!--登录-->
+    <select id="loginByLoginName" parameterType="String" resultType="com.springboot.pojo.User">
+        select * from user where loginName = #{loginName}
+    </select>
+
+    <!--模糊查询用户信息-->
+    <select id="selectUserByLoginName" parameterType="com.springboot.pojo.User" resultType="com.springboot.pojo.User">
+        select * from user where loginName like #{loginName}
+    </select>
+</mapper>
